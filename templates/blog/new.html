@@ -1,0 +1,8 @@
+{% extends "blog/layout.html" %}
+{% block h1 %}New{% endblock %}
+{% block content %}
+<form action="{{ app.url_generator.generate('blog_create') }}" method="post">
+{{form_widget(form)}}
+<input type="submit" value="submit">
+</form>
+{% endblock %}

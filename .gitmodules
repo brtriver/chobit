@@ -1,0 +1,18 @@
+[submodule "Silex.git"]
+	path = Silex.git
+	url = https://github.com/fabpot/Silex.git
+[submodule "Twig.git"]
+	path = Twig.git
+	url = https://github.com/fabpot/Twig.git
+[submodule "vendor/Twig.git"]
+	path = vendor/Twig.git
+	url = https://github.com/fabpot/Twig.git
+[submodule "vendor/Silex.git"]
+	path = vendor/Silex.git
+	url = https://github.com/fabpot/Silex.git
+[submodule "vendor/redbean.git"]
+	path = vendor/redbean.git
+	url = https://github.com/gabordemooij/redbean.git
+[submodule "vendor/symfony.git"]
+	path = vendor/symfony.git
+	url = https://github.com/symfony/symfony.git
