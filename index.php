@@ -31,6 +31,18 @@ $app->register(new Silex\Provider\ValidatorServiceProvider(), array(
     'validator.class_path' => __DIR__ . '/vendor/symfony.git/src',
 ));
 
+// $app['db']
+$app['db.dsn'] = 'sqlite:/tmp/dbfile.txt';
+$app['db.user'] = 'chobit';
+$app['db.password'] = '';
+$app->register(new Chobito\Provider\RedbeanServiceProvider(), array(
+    'db.redbean.class_path' => realpath(__DIR__ . '/vendor/redbean.git'),
+    'db.options' => array(
+        'dsn' => sprintf('%s', $app['db.dsn']),
+        'username' => $app['db.user'],
+        'password' => $app['db.password'],
+    ),
+));
 
 // mount each controller
 $app->mount('/blog', new Chobito\BlogControllerProvider());

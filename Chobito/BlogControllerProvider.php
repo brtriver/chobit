@@ -9,53 +9,50 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Form\Extension\Csrf\Type\CsrfType;
 
+use Chobito\Entity;
+
 class BlogControllerProvider implements ControllerProviderInterface
 {
     public function connect(Application $app)
     {
+        // $app[model.blog]
+        $app->register(new Entity\BlogServiceProvider());
+        // for create form
+        $app['blog.create.form'] = $app->share(function($app) {
+            $constraint = new Constraints\Collection(array(
+                'title' => new Constraints\MaxLength(array('limit'=>10, 'message' => 'title is too long')),
+                'tag'   => new Constraints\MaxLength(array('limit'=>3)),
+                'article'  => new Constraints\MaxLength(array('limit'=>100)),
+            ));
+            $form = $app['form.factory']
+                      ->createBuilder('form', array(), array('validation_constraint' => $constraint))
+                        ->add('title', 'text', array('label' => 'Title:'))
+                        ->add('tag', 'text', array('label' => 'Tag:'))
+                        ->add('article', 'textarea', array('label' => 'Article:'))
+                      ->getForm();
+            return $form;
+            });
+        // contollers
         $controllers = new ControllerCollection();
         // list
         $controllers->get('/', function (Application $app) {
             return $app['twig']->render('blog/list.html', array());
         });
+
         // new
-        $form_post = function($app) {
-          return  $app['form.factory']
-            	        ->createBuilder('form')
-                	    ->add('title', 'text', array('label' => 'Title:'))
-                	    ->add('tag', 'text', array('label' => 'Tag:'))
-                	    ->add('article', 'textarea', array('label' => 'Article:'))
-            	        ->getForm();            
-        };
-        $controllers->get('/new', function (Application $app) use ($form_post) {
-           $form = $form_post($app);
-            return $app['twig']->render('blog/new.html', array('form' => $form->createView()));
-        });
-        $controllers->post('/create', function (Request $request, Application $app) use ($form_post) {
-            $form = $request->get('form');
-print_r($form);
-            $collectionConstraint = new Constraints\Collection(array(
-                'title' => new Constraints\MaxLength(array('limit'=>3, 'message' => 'Invalid email address')),
-                'tag'   => new Constraints\MaxLength(array('limit'=>3)),
-                'article'  => new Constraints\MaxLength(array('limit'=>3)),
-                '_token' => new Constraints\Callback(array('methods' => array(function(){
-                    return false;
-                })))
-            ));
-            
-            $errorList = $app['validator']->validateValue($form, $collectionConstraint);
-            $errors = array();
-            foreach ($errorList as $error) {
-                // getPropertyPath returns form [email], so we strip it
-                $field = substr($error->getPropertyPath(), 1, -1);
-
-                $errors[$field] = $error->getMessage();
-            }
-
-echo "<pre>";
-print_r($errors);
-
-            return;
+        $controllers->get('/new', function (Application $app) {
+                return $app['twig']->render('blog/new.html', array('form' => $app['blog.create.form']->createView()));
+        })
+        ->bind('blog_new');
+        // create
+        $controllers->post('/create', function (Request $request, Application $app) {
+             $is_valid = $app['blog.create.is_valid'];
+             if ($app['blog.create.form']->bindRequest($request)->isValid()) {
+                 $id = $app['model.blog']->store($request->get('form'));
+                 return $id;
+             } else {
+             }
+             return $app['twig']->render('blog/new.html', array('form' => $app['blog.create.form']->createView()));
         })
         ->bind('blog_create');
         return $controllers;
