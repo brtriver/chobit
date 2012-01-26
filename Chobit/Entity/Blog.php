@@ -1,20 +1,7 @@
 <?php
 namespace Chobit\Entity;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
-
-class BlogServiceProvider implements ServiceProviderInterface
-{
-    public function register(Application $app)
-    {
-        $app['model.blog'] = $app->share(function() use ($app) {
-            return new BlogEntityServiceProvider($app['db']);
-        });
-    }
-}
-
-class BlogEntityServiceProvider {
+class Blog {
     public $db;
     public function __construct($db)
     {

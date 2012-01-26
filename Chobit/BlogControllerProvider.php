@@ -8,14 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\Validator\Constraints;
 
-use Chobit\Entity;
+use Chobit\Provider\BlogEntityServiceProvider;
 
 class BlogControllerProvider implements ControllerProviderInterface
 {
     protected function initialize(Application $app)
     {
         // $app[model.blog]
-        $app->register(new Entity\BlogServiceProvider());
+        $app->register(new BlogEntityServiceProvider());
         // for template
         $app['twig.loader']->addLoader(new \Twig_Loader_Filesystem(__DIR__.'/templates/blog'));
         // for create form

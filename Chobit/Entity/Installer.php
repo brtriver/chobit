@@ -1,20 +1,7 @@
 <?php
 namespace Chobit\Entity;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
-
-class InstallerServiceProvider implements ServiceProviderInterface
-{
-    public function register(Application $app)
-    {
-        $app['installer'] = $app->share(function() use ($app){
-            return new InstallerEntityServiceProvider($app['base_dir']);
-        });
-    }
-}
-
-class InstallerEntityServiceProvider {
+class Installer {
     public $db;
     public $baseDir;
     public $configFile = 'config.php';

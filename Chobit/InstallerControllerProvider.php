@@ -9,14 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\Validator\Constraints;
 
-use Chobit\Entity;
+use Chobit\Provider\InstallerEntityServiceProvider;
 
 class InstallerControllerProvider implements ControllerProviderInterface
 {
     protected function initialize(Application $app)
     {
         // $app[model.installer]
-        $app->register(new Entity\InstallerServiceProvider());
+        $app->register(new InstallerEntityServiceProvider());
         // for template
         $app['twig.loader']->addLoader(new \Twig_Loader_Filesystem(__DIR__.'/templates/installer'));
         // for create form
