@@ -10,10 +10,7 @@ class RedbeanServiceProvider implements ServiceProviderInterface
     {
         $app['db'] = $app->share(function() use ($app) {
             if (isset($app['db.redbean.class_path'])) {
-                $redbean_path = $app['db.redbean.class_path'] . DIRECTORY_SEPARATOR . 'rb.php';
-                if ('\\' === DIRECTORY_SEPARATOR) {
-                    $redbean_path = str_replace('\\', '/', $redbean_path);
-                }
+                $redbean_path = $app['db.redbean.class_path'] . '/rb.php';
                 include_once $redbean_path;
             }
             $default_options = array(

@@ -1,5 +1,5 @@
 <?php
-// database
-$app['db.dsn'] = 'sqlite:aaaaa';
-$app['db.user'] = 'aaaa';
-$app['db.password'] = 'aaaa';
+// database for MySQL
+$app['db.dsn'] = 'mysql:aaa';
+$app['db.user'] = 'aaa';
+$app['db.password'] = 'aaa';
