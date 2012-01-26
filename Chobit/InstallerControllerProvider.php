@@ -49,12 +49,18 @@ class InstallerControllerProvider implements ControllerProviderInterface
             $form = $app['installer.form'];
             if ($form->bindRequest($request)->isValid()) {
                 $id = $app['installer']->writeConfigFile($form->getClientData());
-                return $app['twig']->render('complete.html', array());
+                return $app['twig']->render('init.html', array());
             } else {
                 return $app['twig']->render('new.html', array('form' => $form->createView()));
             }
         })
         ->bind('installer_create');
+        // init
+        $controllers->get('/init', function (Application $app) {
+            $app['installer']->initDataBase($app['db']);
+            return $app['twig']->render('complete.html', array());
+        })
+        ->bind('installer_init');
         return $controllers;
     }
 }

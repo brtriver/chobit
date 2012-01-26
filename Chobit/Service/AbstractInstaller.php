@@ -33,4 +33,9 @@ abstract class AbstractInstaller implements InstallerInterface {
             echo "cannot write";
         }
     }
+    public function initDataBase($db)
+    {
+        $db::exec("select * from AAA");
+        //echo $db->exec("select * from AAA");
+    }
 }

@@ -20,12 +20,12 @@ class RedbeanServiceProvider implements ServiceProviderInterface
                 'frozen'   => false,
             );
             $app['db.options'] = array_merge($default_options, $app['db.options']);
-            $toolbox = \RedBean_Setup::kickstart(
+            $rb = \R::setup(
                 $app['db.options']['dsn'],
                 $app['db.options']['username'],
-                $app['db.options']['password'],
-                $app['db.options']['frozen']);
-            return $toolbox->getRedBean();
+                $app['db.options']['password']
+            );
+            return $rb;
         });
     }
 }

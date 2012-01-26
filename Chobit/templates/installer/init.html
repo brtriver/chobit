@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block h1 %}Install Chobit{% endblock %}
+{% block content %}
+<p>
+    <a href="{{ app.url_generator.generate('installer_init') }}">
+        データベースを初期化する
+    </a>
+</p>
+{% endblock %}
