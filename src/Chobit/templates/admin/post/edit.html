@@ -1,0 +1,13 @@
+{% extends "layout_for_admin.html" %}
+
+{% block h1 %}Edit{% endblock %}
+{% block content %}
+<form action="{{ app.url_generator.generate('post_update') }}" method="post">
+{{form_errors(form)}}
+{{form_widget(form)}}
+<div class="actions">
+    <input class="btn primary" type="submit" value="submit">    
+</div>
+</form>
+<a href="{{ app.url_generator.generate('post_delete', {'id': app.request.get('id')}) }}">delete</a>
+{% endblock %}

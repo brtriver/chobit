@@ -4,12 +4,14 @@ namespace Chobit\Service\Installer;
 use Symfony\Component\Validator\Constraints;
 use Chobit\Service\AbstractInstaller;
 
-class MySQL extends AbstractInstaller {
+use R;
+
+class SQLite extends AbstractInstaller {
     public $configFile = 'config.php';
     public $template = <<<'EOL'
 <?php
-// database for MySQL
-$app['db.dsn'] = 'mysql:%%DATABASE%%';
+// database for SQLite
+$app['db.dsn'] = 'sqlite:%%DATABASE%%';
 $app['db.user'] = '%%USERNAME%%';
 $app['db.password'] = '%%PASSWORD%%';
 EOL;
@@ -23,18 +25,10 @@ EOL;
         $createForm = $app->share(function($app) {
             $constraint = new Constraints\Collection(array(
                 'database' => new Constraints\MaxLength(array('limit'=>20)),
-                'username'   => new Constraints\MaxLength(array('limit'=>20)),
-                'password'  => new Constraints\MaxLength(array('limit'=>20)),
-                'host'  => new Constraints\MaxLength(array('limit'=>20)),
-                'prefix'  => new Constraints\MaxLength(array('limit'=>20)),
             ));
             $form = $app['form.factory']
                       ->createBuilder('form', array(), array('validation_constraint' => $constraint))
-                        ->add('database', 'text', array('label' => 'Database Name (MySQL):'))
-                        ->add('username', 'text', array('label' => 'User Name:'))
-                        ->add('password', 'password', array('label' => 'Password:'))
-                        ->add('host', 'text', array('label' => 'Host Name:', 'required' => false))
-                        ->add('prefix', 'text', array('label' => 'Prefix:', 'required' => false))
+                        ->add('database', 'text', array('label' => 'Database Name (File name of SQLite):'))
                       ->getForm();
             return $form;
         });
@@ -43,10 +37,15 @@ EOL;
     protected function createParameters($params)
     {
         $replaces = array(
-            '%%DATABASE%%' => $params['database'],
-            '%%USERNAME%%' => $params['username'],
-            '%%PASSWORD%%' => $params['password'],
+            '%%DATABASE%%' => '../data/' . stripslashes($params['database']),
+            '%%USERNAME%%' => '',
+            '%%PASSWORD%%' => '',
             );
         return str_replace(array_keys($replaces), array_values($replaces), $this->template);
+    }
+    public function execInitSql()
+    {
+        $sql = file_get_contents(__DIR__.'/SQLite.sql');
+        R::exec($sql);
     }
 }

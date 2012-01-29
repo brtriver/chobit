@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout_for_installer.html" %}
 {% block h1 %}Install Chobit{% endblock %}
 {% block content %}
 <form action="{{ app.url_generator.generate('installer_create') }}" method="post">

@@ -10,7 +10,7 @@ class InstallerServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         if (!isset($app['base_dir'])) {
-            $app['base_dir'] = __DIR__ . '/../../';
+            $app['base_dir'] = __DIR__ . '/../../../';
         }
         if (!isset($app['installer.name'])) {
             $app['installer.name'] = self::DEFAULT_DATABASE;

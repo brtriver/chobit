@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Chobito</title>
+        <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+    </head>
+    <body id="layout">
+    <div class="page-header">
+        <h1> {% block h1 %}Chobit <small>Simple and Extensibility Blog Application with Silex</small>{% endblock %}</h1>
+    </div>
+    <div class="row">
+      <div class="span12">
+          {% block content %}{% endblock %}
+      </div>
+      <div class="span6">
+          <ul>
+            <li><a href="#">about</a></li>
+            <li><a href="#">categories</a></li>
+          </ul>
+      </div>
+    </div>
+    </body>
+</html>

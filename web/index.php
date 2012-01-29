@@ -1,15 +1,16 @@
 <?php
-#require_once __DIR__.'/silex.phar';
-require_once __DIR__.'/vendor/silex.git/autoload.php';
+#require_once __DIR__.'/../silex.phar';
+require_once __DIR__.'/../vendor/silex.git/autoload.php';
 
 $app = new Silex\Application();
-$app['autoloader']->registerNamespace('Chobit', __DIR__);
+$app['autoloader']->registerNamespace('Chobit', __DIR__.'/../src');
 // load setting
-require_once __DIR__.'/config/config.php';
-require_once __DIR__.'/config/register.php';
+require_once __DIR__.'/../config/config.php';
+require_once __DIR__.'/../config/register.php';
 // mount each controller
-$app->mount('/blog', new Chobit\BlogControllerProvider());
+$app->mount('/admin', new Chobit\AdminControllerProvider());
 $app->mount('/install', new Chobit\InstallerControllerProvider());
+$app->mount('/blog', new Chobit\BlogControllerProvider());
 // for help page
 $app->get('/help', function () use ($app) {
     return  $app->escape('This page is help page');
