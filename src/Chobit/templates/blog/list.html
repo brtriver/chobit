@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
-{% block content %}
-<div class="row">
-    {% for post in posts %}
-    <div class="span10 offset1">
-        <h3>{{post.title}}</h3>
-        <div>{{post.content}}</div>
+{% block post %}
+<div class="span11 columns">
+{% for post in posts %}
+    <div class="page-header">
+        <h2>{{post.title}}</h2>
+    </div> <!-- /page-header -->
+    <div class="post_content">
+        <p>{{post.content}}</p>
         <p class="pull-right"><a href="{{ app.url_generator.generate('blog_detail', {'id': post.id}) }}">read more ...</a></p>
-        <hr>
-    </div>
-    {% endfor %}
+    </div> <!-- /post_content -->
+{% endfor %}
 </div>
-
 {% endblock %}

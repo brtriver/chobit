@@ -5,6 +5,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Validator\Constraints;
 
@@ -42,12 +43,14 @@ class AdminControllerProvider implements ControllerProviderInterface
         $app = $this->initialize($app);
         // contollers
         $controllers = new ControllerCollection();
+
         // list
         $controllers->get('/', function (Application $app) {
             $posts = $app['model.post']->findAll();
             return $app['twig']->render('post/list.html', array('posts' => $posts));
         })
         ->bind('post_list');
+
         // new post
         $controllers->get('/new', function (Application $app) {
             $create_form = $app['post.create_form'];
@@ -55,6 +58,7 @@ class AdminControllerProvider implements ControllerProviderInterface
             return $app['twig']->render('post/new.html', array('form' => $form->createView()));
         })
         ->bind('post_new');
+
         // create post
         $controllers->post('/create', function (Request $request, Application $app) {
             $create_form = $app['post.create_form'];
@@ -67,6 +71,7 @@ class AdminControllerProvider implements ControllerProviderInterface
             }
         })
         ->bind('post_create');
+
         // edit post
         $controllers->get('/edit/{id}', function ($id, Application $app) {
             $post = $app['model.post']->findById($id);
@@ -75,6 +80,7 @@ class AdminControllerProvider implements ControllerProviderInterface
             return $app['twig']->render('post/edit.html', array('form' => $form->createView()));
         })
         ->bind('post_edit');
+
         // updated post
         $controllers->post('/update', function (Request $request, Application $app) {
             $params = $request->get('form');
@@ -88,12 +94,14 @@ class AdminControllerProvider implements ControllerProviderInterface
             }
         })
         ->bind('post_update');
+
         // delete post
         $controllers->get('/delete/{id}', function ($id, Application $app) {
             $app['model.post']->delete($id);
             return $app->redirect($app['url_generator']->generate('post_list'));
         })
         ->bind('post_delete');
+
         return $controllers;
     }
 }

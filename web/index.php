@@ -5,9 +5,10 @@ require_once __DIR__.'/../vendor/silex.git/autoload.php';
 $app = new Silex\Application();
 $app['autoloader']->registerNamespace('Chobit', __DIR__.'/../src');
 // load setting
-require_once __DIR__.'/../config/config.php';
-require_once __DIR__.'/../config/register.php';
+require_once __DIR__.'/../app/app.php';
+require_once __DIR__.'/../app/register.php';
 // mount each controller
+$app->mount('/auth', new Chobit\BasicAuthControllerProvider());
 $app->mount('/admin', new Chobit\AdminControllerProvider());
 $app->mount('/install', new Chobit\InstallerControllerProvider());
 $app->mount('/blog', new Chobit\BlogControllerProvider());

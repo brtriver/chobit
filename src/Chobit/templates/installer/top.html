@@ -2,17 +2,11 @@
 {% block h1 %}Install Chobit{% endblock %}
 {% block content %}
 <p>
-    wp-config.php ファイルが存在しないようです。スタートするにはこのファイルが必要です。
-</p>
-<p>
-        ヘルプが必要ですか ? こちらをご覧ください。
-</p>
-<p>
-    Web 上の画面から wp-config.php ファイルを作成することもできますが、 対応していない設定のサーバーもあります。最も安全な方法は、手動でこのファイルを作成することです。
+    Let's install Chobit
 </p>
 <p>
     <a href="{{ app.url_generator.generate('installer_confirm') }}">
-        設定ファイルを作成する
+        create config.php file
     </a>
 </p>
 {% endblock %}
