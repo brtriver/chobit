@@ -51,6 +51,7 @@ EOL;
     }
     public function execInitSql()
     {
-        throw new Exception('not impliment');
+        $sql = file_get_contents(__DIR__.'/MySQL.sql');
+        R::exec($sql);
     }
 }

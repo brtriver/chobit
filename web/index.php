@@ -11,7 +11,7 @@ require_once __DIR__.'/../app/register.php';
 $app->mount('/auth', new Chobit\BasicAuthControllerProvider());
 $app->mount('/admin', new Chobit\AdminControllerProvider());
 $app->mount('/install', new Chobit\InstallerControllerProvider());
-$app->mount('/blog', new Chobit\BlogControllerProvider());
+$app->mount('/', new Chobit\BlogControllerProvider());
 // for help page
 $app->get('/help', function () use ($app) {
     return  $app->escape('This page is help page');

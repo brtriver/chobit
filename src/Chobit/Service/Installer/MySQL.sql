@@ -1,0 +1,9 @@
+CREATE TABLE  `chobit`.`posts` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+`author_id` INT UNSIGNED NOT NULL DEFAULT  '0',
+`content` TEXT NOT NULL ,
+`created` DATETIME NOT NULL ,
+`title` VARCHAR( 255 ) NOT NULL ,
+`tag` VARCHAR( 255 ) NOT NULL DEFAULT  '',
+PRIMARY KEY (  `id` )
+) ENGINE = INNODB;

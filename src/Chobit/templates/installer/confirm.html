@@ -1,16 +1,14 @@
 {% extends "layout_for_installer.html" %}
 {% block h1 %}Install Chobit{% endblock %}
 {% block content %}
-<p>WordPress へようこそ。あらかじめデータベースに関する若干の情報を用意してください。作業を進める前に以下のデータベース情報を知っている必要があります。</p>
+<p>NOTE: You have to know about configurations of database.</p>
 <ol>
-	<li>データベース名</li>
-	<li>データベースのユーザー名</li>
-	<li>データベースのパスワード</li>
-	<li>データベースのホスト名</li>
-	<li>テーブル接頭辞 (1つのデータベースに複数の WordPress を構築する場合)</li>
+	<li>database name</li>
+	<li>user name</li>
+	<li>password</li>
+	<li>host name (MySQL only)</li>
 </ol>
-<p><strong>もし何かが原因で自動ファイル生成が動作しなくても心配しないでください。この機能は設定ファイルにデータベース情報を記入するだけです。テキストエディタで <code>wp-config-sample.php</code> を開き、データベース接続の詳細を記入してこのファイルの名前を <code>wp-config.php</code> として保存してもかまいません。</strong></p>
-<p>これらのデータベース情報はホスティング先から提供されます。データベース情報がわからない場合、作業を続行する前にホスティング先と連絡を取ってください。すべての準備が整っているなら…</p>
+<p><strong>You can set configurations to open the <code>config.sample.php</code> and edit it. after you edit it, change the name to <code>config.php</code>.</strong></p>
 
 <p class="step"><a href="{{ app.url_generator.generate('installer_new') }}" class="button">次に進みましょう !</a></p>
 
